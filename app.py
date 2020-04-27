@@ -22,7 +22,8 @@ def verify_session_id():
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    session['session_id'] = uuid.uuid1()
+    if 'session_id' not in session:
+        session['session_id'] = uuid.uuid1()
     return render_template('index.html')
 
 @app.route('/scrape', methods=[ 'POST', 'GET'])
