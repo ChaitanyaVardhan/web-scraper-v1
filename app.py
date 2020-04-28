@@ -38,13 +38,17 @@ def scrape():
         hrefs = []
         for anchor in anchors:
             match_obj = re.search(href_pattern, anchor)
-            hrefs.append(match_obj.group(1))
+            hrefs.append(
+                dict(
+                    url=match_obj.group(1)
+                )
+            )
         file_name = '_'.join(url.split("//")[1].split('/'))
         Cache[session['session_id']] = dict(
             file_name = file_name,
             data = hrefs
         )
-        return jsonify(hrefs)
+        return render_template("scrapes.html", hrefs=hrefs)
     else:
         return render_template('index.html')
     
