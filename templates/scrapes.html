@@ -45,9 +45,43 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class=" mr-2">
+      <div class=" mr-2" >
 	<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#staticBackdropLive">Save</button>
+            <!-- Modal -->
+	    <div id="staticBackdropLive" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+	      <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+		    <h5 class="modal-title" id="staticBackdropLiveLabel">Hey There!!!</h5>
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		      <span aria-hidden="true">&times;</span>
+		    </button>
+		  </div>
+		  <div class="modal-body">
+		    <p>Please Enter a valid email id to save the scrape as a file</p>
+		    <form id="saveScrape" class="form-group"  action="/save" method="post">
+		      <div class="form-group">
+			<label for="exampleFormControlInput1">Email address</label>
+			<input type="email" class="form-control" name="emailId" id="exampleFormControlInput1" placeholder="name@example.com">
+		      </div>
+		    </form>		    
+		  </div>
+		  <div class="modal-footer">
+		    <button type="submit" class="btn btn-primary">Save File</button>		      		    
+		    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	      </div>
+	    </div>	
       </div>
+      <script>
+	$('#saveScrape').on('submit', function(e){
+	$.post('/save', $('#saveScrape').serialize(),
+	function(data, status, xhr){
+	}
+	)
+	})
+      </script>
       <h2>Scrapes</h2>
       <div class="table-responsive">
 	<table class="table table-striped table-sm">
@@ -76,25 +110,7 @@
 	</table>
       </div>
     </div>
-      <!-- Modal -->
-      <div id="staticBackdropLive" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-	  <div class="modal-content">
-	    <div class="modal-header">
-	      <h5 class="modal-title" id="staticBackdropLiveLabel">Modal title</h5>
-	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	      </button>
-	    </div>
-	    <div class="modal-body">
-	      <p>I will not close if you click outside me. Don't even try to press escape key.</p>
-	    </div>
-	    <div class="modal-footer">
-	      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	      <button type="button" class="btn btn-primary">Understood</button>
-	    </div>
-	  </div>
-	</div>
-      </div>    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
   </body>
 </html>

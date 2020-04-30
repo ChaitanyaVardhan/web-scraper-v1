@@ -26,6 +26,12 @@ def index():
         session['session_id'] = uuid.uuid1()
     return render_template('index.html')
 
+@app.route('/test', methods=['POST', 'GET'])
+def test():
+    if 'session_id' not in session:
+        session['session_id'] = uuid.uuid1()
+    return render_template('test.html')
+
 @app.route('/scrape', methods=[ 'POST', 'GET'])
 def scrape():
     if request.method == 'POST':
@@ -52,17 +58,20 @@ def scrape():
     else:
         return render_template('index.html')
     
-@app.route('/save')
+@app.route('/save', methods = ["POST"])
 def save_scrape():
-    if 'session_id' in session:
-        s3 = boto3.resource('s3')
-        s3.Bucket(
-            os.environ.get("BUCKET_NAME")
-        ).put_object(
-            Key=f"{session['session_id']}/{Cache[session['session_id']]['file_name']}.json",
-            Body=json.dumps(Cache[session['session_id']]['data'])
-        )
-        return jsonify({'status': 'saved'})
+    if request.method == "POST":
+        if 'session_id' in session:
+            email_id = request.form.get('emailId')
+            dir_name = email_id
+            s3 = boto3.resource('s3')
+            s3.Bucket(
+                os.environ.get("BUCKET_NAME")
+            ).put_object(
+                Key=f"{dir_name}/{Cache[session['session_id']]['file_name']}.json",
+                Body=json.dumps(Cache[session['session_id']]['data'])
+            )
+            return jsonify({'status': 'saved'})
     else:
         return redirect('/')
 
