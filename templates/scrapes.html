@@ -64,10 +64,11 @@
 			<label for="exampleFormControlInput1">Email address</label>
 			<input type="email" class="form-control" name="emailId" id="exampleFormControlInput1" placeholder="name@example.com">
 		      </div>
+		      <div id="responseMsg"></div>
 		    </form>		    
 		  </div>
 		  <div class="modal-footer">
-		    <button type="submit" class="btn btn-primary">Save File</button>		      		    
+		    <button id="saveScrapeSubmit" class="btn btn-primary">Save File</button>		      		        
 		    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		  </div>
 		</div>
@@ -75,12 +76,19 @@
 	    </div>	
       </div>
       <script>
-	$('#saveScrape').on('submit', function(e){
-	$.post('/save', $('#saveScrape').serialize(),
-	function(data, status, xhr){
-	}
-	)
-	})
+	  $(function(){
+	  $('#saveScrapeSubmit').on('click', function(e){
+	  e.preventDefault();
+	  $.ajax({
+	  url: '/save',
+	  type: 'POST',
+	  data: $('#saveScrape').serialize(),
+	  success: function(data){
+	  $("#responseMsg").text(data)
+	  }
+	  });
+	  });
+	  });
       </script>
       <h2>Scrapes</h2>
       <div class="table-responsive">

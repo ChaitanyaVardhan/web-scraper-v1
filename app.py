@@ -65,8 +65,9 @@ def save_scrape():
             email_id = request.form.get('emailId')
             dir_name = email_id
             s3 = boto3.resource('s3')
+            BUCKET_NAME = os.environ.get("BUCKET_NAME")
             s3.Bucket(
-                os.environ.get("BUCKET_NAME")
+                BUCKET_NAME
             ).put_object(
                 Key=f"{dir_name}/{Cache[session['session_id']]['file_name']}.json",
                 Body=json.dumps(Cache[session['session_id']]['data'])
